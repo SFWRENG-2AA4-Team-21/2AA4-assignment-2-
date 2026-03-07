@@ -126,16 +126,33 @@ public class Game {
 
             // find first free node
             boolean placed = false;
-            for (int nodeId = 1; nodeId <= 6; nodeId++) {
-                Node n = board.getNode(nodeId);
-                if (n != null && !n.hasBuilding()) {
-                    n.placeBuilding(new Settlement());
-                    p.addVictoryPoints(1);     
-                    System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
-                    placed = true;
-                    break;
+            if((p instanceof HumanPlayer)){
+                for (int nodeId = 1; nodeId <= 6; nodeId++) {
+                    Node n = board.getNode(nodeId);
+                    if (n != null && !n.hasBuilding()) {
+                        n.placeBuilding(new Settlement());
+                        p.addVictoryPoints(1);
+                        System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
+                        placed = true;
+                        break;
+                    }
                 }
             }
+            else{
+                int nodeId = ((HumanPlayer) p).askForLoc();   // ask human
+                Node n = board.getNode(nodeId);
+
+                if (n != null && !n.hasBuilding()) {
+                    n.placeBuilding(new Settlement());
+                    p.addVictoryPoints(1);
+                    System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
+                    placed = true;
+                }
+                else {
+                    System.out.println("Invalid node or already occupied.");
+                }
+            }
+
 
             if (!placed) {
                 // refund if nowhere to place

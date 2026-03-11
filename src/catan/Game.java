@@ -49,11 +49,19 @@ public class Game {
         board.addTile(1, new Tile(1, "WOOD", 6));
         board.addTile(2, new Tile(2, "BRICK", 8));
         board.addTile(3, new Tile(3, "SHEEP", 9));
-
-        for (int i = 1; i <= 6; i++) {
+        /*
+        for (int i = 1; i < 6; i++) {
             board.addNode(i, new Node(i));
 			board.addEdge(i, new Edge(i, i, i+1));
-        }
+        }*/
+         int[] nodeIDs = {0,1,2,3,4,5,6,7};
+         int[][] edgePairs = {{0,1}, {1,2},{2,3},{3,6}, {6,7}};
+         for (int id : nodeIDs) {
+            board.addNode(id, new Node(id));
+         }
+         for(int i=0; i<edgePairs.length; i++){
+            board.addEdge(i, new Edge(i, edgePairs[i][0], edgePairs[i][1]));
+         }
 
 
         //main simulation loop
@@ -127,7 +135,7 @@ public class Game {
             // find first free node
             boolean placed = false;
             if(!(p instanceof HumanPlayer)){
-                for (int nodeId = 1; nodeId <= 6; nodeId++) {
+                for (int nodeId : new int[]{0,1,2,3,6,7}) {
                     Node n = board.getNode(nodeId);
                     if (n != null && !n.hasBuilding()) {
                         n.placeBuilding(new Settlement(p));
@@ -154,20 +162,7 @@ public class Game {
                     System.out.println("Invalid node or already occupied.");
                 }
             }
-            else{
-                for (int nodeId = 1; nodeId <= 6; nodeId++) {
-                    Node n = board.getNode(nodeId);
-                    if (n != null && !n.hasBuilding()) {
-                        n.placeBuilding(new Settlement());
-                        p.addVictoryPoints(1);
-                        System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
-                        placed = true;
-                        break;
-                    }
-                }
-            }
-
-
+            
             if (!placed) {
                 // refund if nowhere to place
                 p.addResources("WOOD", 1);
@@ -185,7 +180,7 @@ public class Game {
 
             // find first free edge
             boolean placed = false;
-            for (int edgeId = 1; edgeId <= 6; edgeId++) {
+            for (int edgeId = 1; edgeId < 5; edgeId++) {
                 Edge e = board.getEdge(edgeId);
                 if (e != null && e.getRoad() == null) {
                     e.placeRoad(new Road(p));

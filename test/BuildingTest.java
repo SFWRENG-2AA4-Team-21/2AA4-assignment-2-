@@ -1,5 +1,6 @@
 
 import catan.Building;
+import catan.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,7 @@ public class BuildingTest {
     private Building building;
     @BeforeEach
     void setBuilding(){
-        building = new Building(100);
+        building = new Building(100,new Player(1));
     }
     @Test
     void testSetandget(){

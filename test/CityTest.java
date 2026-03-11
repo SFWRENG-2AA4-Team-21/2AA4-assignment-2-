@@ -1,6 +1,7 @@
 
 import catan.City;
 import catan.Building;
+import catan.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ public class CityTest {
     private City city;
     @BeforeEach
     void setCity(){
-        city = new City();
+        city = new City(new Player(1));
     }
     @Test
     void cityCorrectVictoryPoints(){

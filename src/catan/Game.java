@@ -133,7 +133,7 @@ public class Game {
                         n.placeBuilding(new Settlement(p));
                         p.addVictoryPoints(1);
                         System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
-                        GameStateWriter.write(board);
+                        //GameStateWriter.write(board);
                         placed = true;
                         break;
                     }
@@ -147,25 +147,15 @@ public class Game {
                     n.placeBuilding(new Settlement(p));
                     p.addVictoryPoints(1);
                     System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
-                    GameStateWriter.write(board);
+                    //GameStateWriter.write(board);
                     placed = true;
                 }
                 else {
                     System.out.println("Invalid node or already occupied.");
                 }
             }
-            else{
-                for (int nodeId = 1; nodeId <= 6; nodeId++) {
-                    Node n = board.getNode(nodeId);
-                    if (n != null && !n.hasBuilding()) {
-                        n.placeBuilding(new Settlement());
-                        p.addVictoryPoints(1);
-                        System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
-                        placed = true;
-                        break;
-                    }
-                }
-            }
+
+
 
 
             if (!placed) {
@@ -190,7 +180,7 @@ public class Game {
                 if (e != null && e.getRoad() == null) {
                     e.placeRoad(new Road(p));
                     System.out.println("Player " + currentPlayer + " built Road at Edge " + edgeId);
-                    GameStateWriter.write(board);
+                    //GameStateWriter.write(board);
                     placed = true;
                     break;
                 }

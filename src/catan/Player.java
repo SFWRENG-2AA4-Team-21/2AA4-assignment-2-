@@ -19,7 +19,7 @@ public class Player {
 	protected Map<String, Integer> resources;
 	protected String colour;
 
-	private static final String[] colours = {"RED", "BLUE", "ORANGE", "WHITE"}
+	private static final String[] colours = {"RED", "BLUE", "ORANGE", "WHITE"};
 
 	public Player(int playerId){
 		this.playerId = playerId;

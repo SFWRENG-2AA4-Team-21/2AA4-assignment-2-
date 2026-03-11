@@ -36,7 +36,7 @@ class BoardTest {
 
     @Test
     void testAddAndGetEdge() {
-        Edge edge = new Edge(2);
+        Edge edge = new Edge(2,2,2);
         board.addEdge(3, edge);
 
         assertEquals(edge, board.getEdge(3));
@@ -65,8 +65,8 @@ class BoardTest {
 
     @Test
     void testGetAllEdges() {
-        board.addEdge(1, new Edge(4));
-        board.addEdge(2, new Edge(5));
+        board.addEdge(1, new Edge(4,4,4));
+        board.addEdge(2, new Edge(5,5,5));
 
         assertEquals(2, board.getAllEdges().size());
     }

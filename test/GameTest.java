@@ -10,7 +10,7 @@ public  class GameTest {
 	private Game game;
 	@BeforeEach
 	void setUp() {
-		game = new Game(2);
+		game = new Game(1);
 	}
 
 	@Test

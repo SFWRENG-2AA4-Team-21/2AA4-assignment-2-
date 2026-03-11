@@ -1,4 +1,4 @@
-package test;
+
 
 import catan.Board;
 import catan.Edge;

@@ -1,4 +1,4 @@
-package test;
+
 import catan.City;
 import catan.Building;
 import org.junit.jupiter.api.BeforeEach;

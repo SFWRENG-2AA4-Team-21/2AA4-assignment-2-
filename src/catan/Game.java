@@ -52,7 +52,7 @@ public class Game {
 
         for (int i = 1; i <= 6; i++) {
             board.addNode(i, new Node(i));
-			board.addEdge(i, new Edge(i));
+			board.addEdge(i, new Edge(i, i, i+1));
         }
 
 
@@ -126,14 +126,28 @@ public class Game {
 
             // find first free node
             boolean placed = false;
-            if((p instanceof HumanPlayer)){
+            if(!(p instanceof HumanPlayer)){
+                for (int nodeId = 1; nodeId <= 6; nodeId++) {
+                    Node n = board.getNode(nodeId);
+                    if (n != null && !n.hasBuilding()) {
+                        n.placeBuilding(new Settlement(p));
+                        p.addVictoryPoints(1);
+                        System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
+                        GameStateWriter.write(board);
+                        placed = true;
+                        break;
+                    }
+                }
+            }
+            else{
                 int nodeId = ((HumanPlayer) p).askForLoc();   // ask human
                 Node n = board.getNode(nodeId);
 
                 if (n != null && !n.hasBuilding()) {
-                    n.placeBuilding(new Settlement());
+                    n.placeBuilding(new Settlement(p));
                     p.addVictoryPoints(1);
                     System.out.println("Player " + currentPlayer + " built Settlement at Node " + nodeId);
+                    GameStateWriter.write(board);
                     placed = true;
                 }
                 else {
@@ -174,8 +188,9 @@ public class Game {
             for (int edgeId = 1; edgeId <= 6; edgeId++) {
                 Edge e = board.getEdge(edgeId);
                 if (e != null && e.getRoad() == null) {
-                    e.placeRoad(new Road());
+                    e.placeRoad(new Road(p));
                     System.out.println("Player " + currentPlayer + " built Road at Edge " + edgeId);
+                    GameStateWriter.write(board);
                     placed = true;
                     break;
                 }

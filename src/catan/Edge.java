@@ -11,15 +11,28 @@ public class Edge {
 	 */
 	private int id;
 	private Road road;
+	private int nodeA;
+	private int nodeB;
+	private Road road;
 
-	public Edge(int id){
+	public Edge(int id, int nodeA, int nodeB){
 		this.id = id;
+		this.nodeA = nodeA;
+		this.nodeB = nodeB;
 		this.road = null;
 	}
 
 	public int getId(){
         return id;
     }
+
+	public int getNodeA(){
+		return nodeA;
+	}
+
+	public int getNodeB(){
+		return nodeB;
+	}
 
 	public boolean hasRoad(){
         return road != null;

@@ -182,8 +182,9 @@ public class Game {
             boolean placed = false;
             for (int edgeId = 1; edgeId < 5; edgeId++) {
                 Edge e = board.getEdge(edgeId);
-                if (e != null && e.getRoad() == null) {
-                    e.placeRoad(new Road(p));
+                if (e != null && !e.hasRoad()) {
+                    Road r = new Road(p, e); 
+                    e.placeRoad(r);
                     System.out.println("Player " + currentPlayer + " built Road at Edge " + edgeId);
                     GameStateWriter.write(board);
                     placed = true;

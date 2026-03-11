@@ -13,7 +13,6 @@ public class Edge {
 	private Road road;
 	private int nodeA;
 	private int nodeB;
-	private Road road;
 
 	public Edge(int id, int nodeA, int nodeB){
 		this.id = id;

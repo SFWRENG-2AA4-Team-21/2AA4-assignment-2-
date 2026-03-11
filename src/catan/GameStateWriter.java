@@ -1,7 +1,7 @@
 package catan;
 
 import java.io.FileWriter;
-import java.ioIOException;
+import java.io.IOException;
 import java.util.Collection;
 
 
@@ -14,15 +14,15 @@ public class GameStateWriter{
 
     public static void write(Board board, String outputPath){
         StringBuilder sb = new StringBuilder();
-        sb.append("{\n}");
-    }
+        sb.append("{\n");
+    
 
     // roads
     sb.append(" \"roads\": [\n");
     Collection<Edge> edges = board.getAllEdges();
     boolean firstRoad = true;
     for(Edge edge : edges){
-        if(!edge.hasRoad() continue);
+        if(!edge.hasRoad()) continue;
         Road road = edge.getRoad();
          //     REMOVE WHEN ROAD.GETOWNER IMPLEMENTED
         if(road.getOwner() == null){
@@ -61,14 +61,15 @@ public class GameStateWriter{
         }
 
         if(!firstBuilding){
-            sb.append(",\n");
+            sb.append(",\n"); }
+            
             firstBuilding = false;
-            String type = (building instanceOf City) ? "CITY" : "SETTLEMENT";
+            String type = (building instanceof City) ? "CITY" : "SETTLEMENT";
             
             sb.append("    { ");
             sb.append("\"node\": ").append(node.getID()).append(", ");
-            sb.append("\"owner\": \"").append(road.getOwner().getColorString()).append("\", ");
-            sb.append("\"type\": ").append(type).append("\"");
+            sb.append("\"owner\": \"").append(building.getOwner().getColorString()).append("\", ");
+            sb.append("\"type\": \"").append(type).append("\"");
             sb.append(" }");
         }
 

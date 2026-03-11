@@ -1,25 +1,33 @@
 name: Build
+
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   sonarqube:
     name: SonarQube
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+
     steps:
+      # Step 1 — Checkout the repo
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0  # ensures full history for Sonar
+
+      # Step 2 — Run Sonar scan
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
-#        env:
-##          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-##      - name: SonarQube Quality Gate
-##        uses:
-###        uses: SonarSource/sonarqube-quality-gate-action@v1
-##        timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      # Step 3 — (Optional) skip Quality Gate to avoid failing pipeline
+      # You can uncomment if you want the pipeline to fail on bad quality
+      # - name: SonarQube Quality Gate
+      #   uses: SonarSource/sonarqube-quality-gate-action@v1
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

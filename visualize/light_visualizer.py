@@ -139,26 +139,15 @@ class CatanBoardVisualizer:
             node_id = building_data["node"]
             color = self._parse_color(building_data["owner"])
             building_type = building_data["type"]
-
-            if building_type == "SETTLEMENT":
-                board.build_settlement(
-                    color,
-                    node_id,
-                    initial_build_phase=True
-                )
-            elif building_type == "CITY":
-                # Note: build_city assumes a settlement already exists there
-                # For visualization from JSON, we need to build settlement first
-                board.build_settlement(color, node_id, initial_build_phase=True)
-                board.build_city(color, node_id)
-            else:
-                raise ValueError(f"Unknown building type: {building_type}")
-
+            building_value = SETTLEMENT if building_type == "SETTLEMENT" else CITY
+            board.buildings[node_id] = (color, building_value)
+            
+        
         # For roads
         for road_data in self.state_data.get("roads", []):
             edge = (road_data["a"], road_data["b"])
             color = self._parse_color(road_data["owner"])
-            board.build_road(color, edge)
+            board.roads[edge] = color
 
     def build_game(self) -> Game:
         """

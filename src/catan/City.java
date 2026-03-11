@@ -1,8 +1,8 @@
 package catan;
 
 public class City extends Building{
-    public City(){
-        super(2);
+    public City(Player owner){
+        super(2, owner);
     }
 }
 

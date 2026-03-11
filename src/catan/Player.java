@@ -17,6 +17,9 @@ public class Player {
 	protected boolean largestArmy;
 	protected boolean largestVillage;
 	protected Map<String, Integer> resources;
+	protected String colour;
+
+	private static final String[] colours = {"RED", "BLUE", "ORANGE", "WHITE"}
 
 	public Player(int playerId){
 		this.playerId = playerId;
@@ -24,8 +27,12 @@ public class Player {
         this.largestArmy = false;
         this.largestVillage = false;
         this.resources = new HashMap<>();
+		this.colour = colours[playerId % colours.length];
 	}
 
+	public String getColorString(){
+		return colour;
+	}
 
 	/**
 	 * 

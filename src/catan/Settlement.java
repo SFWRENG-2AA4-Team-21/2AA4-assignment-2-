@@ -9,7 +9,7 @@ package catan;
  * 
  */
 public class Settlement extends Building {
-	public Settlement() {
-        super(1);
+	public Settlement(Player owner) {
+        super(1, owner);
     }
 }

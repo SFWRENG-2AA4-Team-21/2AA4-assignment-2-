@@ -23,6 +23,7 @@ public class Game {
     private int mode;
     private Random rng;
     private int action;
+    private Robber robber; 
 
 	public Game(int mode){
 		this.board = new Board();
@@ -49,6 +50,7 @@ public class Game {
         board.addTile(1, new Tile(1, "WOOD", 6));
         board.addTile(2, new Tile(2, "BRICK", 8));
         board.addTile(3, new Tile(3, "SHEEP", 9));
+        robber = new Robber(board, board.getTile(1));  
         /*
         for (int i = 1; i < 6; i++) {
             board.addNode(i, new Node(i));
@@ -102,11 +104,19 @@ public class Game {
         int roll = dice.roll();
         System.out.println("[Round " + currentRound + "] Player " + currentPlayer + " rolled " + roll);
 
+        if (roll == 7) {
+
+            int tileId = rng.nextInt(3) + 1; 
+            robber.moveTile(tileId);
+
+            System.out.println("Robber has blocked resources on tile " + tileId);
+            return;
+        }
         // simplified resource distribution:
         // if a tile matches the roll, current player gains 1 resource of that tile type
         for (int id = 1; id <= 3; id++) {
             Tile t = board.getTile(id);
-            if (t != null && t.getDiceVal() == roll) {
+            if (t != null && t.getDiceVal() == roll && !robber.checkBlock(t)) {
                 p.addResources(t.getResourceType(), 1);
                 System.out.println("Player " + currentPlayer + " gets 1 " + t.getResourceType());
             }

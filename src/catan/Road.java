@@ -9,13 +9,27 @@ package catan;
  * 
  */
 public class Road {
+
     private Player owner;
-    public Road(Player owner){
+    private Edge edge;
+
+
+    public Road(Player owner, Edge edge){
         this.owner = owner;
+        this.edge = edge;
     }
 
-    public Player getOwner(){
+    public Player getOwner() {
         return owner;
     }
 
+    public Edge getEdge() {
+        return edge;
+    }
+
+    public void setEdge(Edge edge) {
+        this.edge = edge;
+    }
+
 }
+

@@ -3,8 +3,10 @@
 package catan;
 
 import java.util.Scanner;
+
 public class HumanPlayer extends Player {
     Scanner scanner = new Scanner(System.in);
+    RegexTester r = new RegexTester();
 
     public HumanPlayer(int playerID){
         super(playerID);
@@ -20,13 +22,16 @@ public class HumanPlayer extends Player {
     }
     public int askForaction(){
         System.out.println("Choose action:");
-        System.out.println("0 = Build Settlement");
-        System.out.println("1 = Build Road");
-        System.out.println("2 = Pass");
+
+        System.out.println("Build Settlement");
+        System.out.println("Build Road");
+        System.out.println("Pass");
 
 
-        int action = scanner.nextInt();
-        return action;
+        String action = scanner.nextLine();
+        int read_Action = r.parse(action);
+
+        return read_Action;
     }
     public int askForLoc(){
         System.out.println("Choose a node (1-6): ");
@@ -34,5 +39,7 @@ public class HumanPlayer extends Player {
         return nodeId;
     }
 }
+
+
 
 

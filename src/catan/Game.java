@@ -10,23 +10,23 @@ import java.util.Random;
 
 /************************************************************/
 /**
- * 
+ *
  */
 public class Game {
 
-	private Board board;
-	private List<Player> players;
-	private int currentPlayer;
-	private Dice dice;
-	private int maxRounds;
+    private Board board;
+    private List<Player> players;
+    private int currentPlayer;
+    private Dice dice;
+    private int maxRounds;
     private int currentRound;
     private int mode;
     private Random rng;
     private int action;
-    private Robber robber; 
+    private Robber robber;
 
-	public Game(int mode){
-		this.board = new Board();
+    public Game(int mode){
+        this.board = new Board();
         this.players = new ArrayList<>();
         this.currentPlayer = 0;
         this.dice = new Dice();
@@ -35,8 +35,8 @@ public class Game {
         this.currentRound = 1;
         this.mode= mode;
         this.rng = new Random();
-	}
-	public void startGame(){
+    }
+    public void startGame(){
         if(mode ==1){
             for (int i = 0; i < 4; i++) {
                 players.add(new Player(i));
@@ -50,20 +50,20 @@ public class Game {
         board.addTile(1, new Tile(1, "WOOD", 6));
         board.addTile(2, new Tile(2, "BRICK", 8));
         board.addTile(3, new Tile(3, "SHEEP", 9));
-        robber = new Robber(board, board.getTile(1));  
+        robber = new Robber(board, board.getTile(1));
         /*
         for (int i = 1; i < 6; i++) {
             board.addNode(i, new Node(i));
-			board.addEdge(i, new Edge(i, i, i+1));
+          board.addEdge(i, new Edge(i, i, i+1));
         }*/
-         int[] nodeIDs = {0,1,2,3,4,5,6,7};
-         int[][] edgePairs = {{0,1}, {1,2},{2,3},{3,6}, {6,7}};
-         for (int id : nodeIDs) {
+        int[] nodeIDs = {0,1,2,3,4,5,6,7};
+        int[][] edgePairs = {{0,1}, {1,2},{2,3},{3,6}, {6,7}};
+        for (int id : nodeIDs) {
             board.addNode(id, new Node(id));
-         }
-         for(int i=0; i<edgePairs.length; i++){
+        }
+        for(int i=0; i<edgePairs.length; i++){
             board.addEdge(i, new Edge(i, edgePairs[i][0], edgePairs[i][1]));
-         }
+        }
 
 
         //main simulation loop
@@ -91,14 +91,14 @@ public class Game {
             System.out.println("Player " + i + " final score: " + players.get(i).getScore());
         }
 
-        }
+    }
 
 
-	/**
-	 * 
-	 */
-	public void nextTurn() {
-		 Player p = players.get(currentPlayer);
+    /**
+     *
+     */
+    public void nextTurn() {
+        Player p = players.get(currentPlayer);
 
 
         int roll = dice.roll();
@@ -106,7 +106,7 @@ public class Game {
 
         if (roll == 7) {
 
-            int tileId = rng.nextInt(3) + 1; 
+            int tileId = rng.nextInt(3) + 1;
             robber.moveTile(tileId);
 
             System.out.println("Robber has blocked resources on tile " + tileId);
@@ -193,7 +193,7 @@ public class Game {
             for (int edgeId = 1; edgeId < 5; edgeId++) {
                 Edge e = board.getEdge(edgeId);
                 if (e != null && !e.hasRoad()) {
-                    Road r = new Road(p, e); 
+                    Road r = new Road(p, e);
                     e.placeRoad(r);
                     System.out.println("Player " + currentPlayer + " built Road at Edge " + edgeId);
                     GameStateWriter.write(board);
@@ -208,23 +208,25 @@ public class Game {
                 System.out.println("Player " + currentPlayer + " tried Road but no free Edge.");
             }
 
-        } else {
+        } else if(action == 2){
             System.out.println("Player " + currentPlayer + " passes.");
+        }else{
+            System.out.println("Player " + currentPlayer + " made an invalid action.");
         }
-	}
+    }
 
-	/**
-	 * 
-	 * @return 
-	 */
-	public boolean checkWin(){
-		
-	   for (Player p : players) {
+    /**
+     *
+     * @return
+     */
+    public boolean checkWin(){
+
+        for (Player p : players) {
             if (p.getScore()>=10) {
                 return true;
             }
         }
         return false;
-	}
+    }
 
 }
